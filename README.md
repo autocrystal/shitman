@@ -1,5 +1,5 @@
 # Shitman
-A terrible aur helper written in C# .NET
+A lightweight, but terrible, AUR helper written in C# .NET for Linux.
 
 ## Commands
 
