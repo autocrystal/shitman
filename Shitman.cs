@@ -1,0 +1,67 @@
+﻿using System;
+using System.Threading.Tasks;
+
+namespace Shitman
+{
+    class Shitman
+    {
+        public static AurClient aurClient = new AurClient();
+        public static string cacheDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),".cache/shitman/repos");
+
+        static async Task Main(string[] args)
+        {
+            aurClient.Init();
+
+            SearchCommand searchCommand = new SearchCommand();
+            RemoveCommand removeCommand = new RemoveCommand();
+            InstallCommand installCommand = new InstallCommand();
+
+            if (args.Length == 0)
+            {
+                Console.WriteLine("No command provided.");
+                return;
+            }
+
+            string command = args[0].ToLower();
+
+            switch (command)
+            {
+                case "-s":
+                    if (args.Length != 2)
+                    {
+                        Console.WriteLine("invalid amount of arguments!");
+                        return;
+                    }
+
+                    await installCommand.Run(args[1]);
+                    break;
+
+                case "-ss":
+                    if (args.Length < 2)
+                    {
+                        Console.WriteLine("search requires a query!");
+                        return;
+                    }
+
+                    string query = string.Join(" ", args, 1, args.Length - 1);
+
+                    await searchCommand.Run(query);
+                    break;
+
+                case "-r":
+                    if (args.Length != 2)
+                    {
+                        Console.WriteLine("invalid amount of arguments!");
+                        return;
+                    }
+
+                    await removeCommand.Run(args[1]);
+                    break;  
+
+                default:
+                    Console.WriteLine("Invalid command.");
+                    break;
+            }
+        }
+    }
+}
