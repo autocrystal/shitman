@@ -4,17 +4,57 @@ namespace Shitman
     {
         public async Task Run(string package)
         {
-            var pkg = await Shitman.aurClient.GetPackage(package);
+            var processed = new HashSet<string>();
+            await Install(package, processed);
+            Console.WriteLine($"Installation of {package} complete!");
+        }
 
-            if(pkg == null)
+        public async Task Install(string _name, HashSet<string> processed)
+        {
+            string name = _name.Split(new[] { '>', '<', '=', ' ' }, StringSplitOptions.RemoveEmptyEntries)[0];
+
+            if (processed.Contains(name)) return;
+            processed.Add(name);
+
+            if (IsInstalled(name))
             {
-                Console.WriteLine($"Package {package} not found!");
+                Console.WriteLine($"{name} is already installed, skipping...");
                 return;
             }
 
-            Console.WriteLine($"Package {pkg.Name} Version {pkg.Version} is now installing...");
+            if (IsRepo(name))
+            {
+                Console.WriteLine($"{name} in official repos, using pacman...");
+                ProcessRunner.Run("sudo", $"pacman -S {name} --noconfirm --needed");
+                return;
+            }
 
-            string repoDir = Path.Combine(Shitman.cacheDir, package);
+            var pkg = await Shitman.aurClient.GetPackage(name);
+
+            if (pkg == null)
+            {
+                Console.WriteLine($"Package {name} not found in AUR or Repos!");
+                return;
+            }
+
+            if (pkg.Depends != null || pkg.MakeDepends != null)
+            {
+                var allDeps = (pkg.Depends ?? new List<string>())
+                              .Concat(pkg.MakeDepends ?? new List<string>());
+
+                foreach (var dep in allDeps)
+                {
+                    await Install(dep, processed);
+                }
+            }
+
+            Console.WriteLine($"Building {pkg.Name} from AUR...");
+            await Build(pkg);
+        }
+
+        private async Task Build(AurPackage pkg)
+        {
+            string repoDir = Path.Combine(Shitman.cacheDir, pkg.Name);
 
             if (Directory.Exists(repoDir))
             {
@@ -22,14 +62,16 @@ namespace Shitman
             }
             else
             {
-                Console.WriteLine($"Cloning repository...");
-                ProcessRunner.Run("git", $"clone https://aur.archlinux.org/{package}.git {repoDir}");
+                ProcessRunner.Run("git", $"clone https://aur.archlinux.org/{pkg.Name}.git {repoDir}");
             }
 
-            Console.WriteLine($"Makepkg...");
             ProcessRunner.RunInDir(repoDir, "makepkg", "-si --skippgpcheck --noconfirm");
-
-            Console.WriteLine($"Package {package} was installed successfully!");
         }
+
+        private bool IsInstalled(string name) => 
+            ProcessRunner.Run("pacman", $"-Qi {name}", false) == 0;
+
+        private bool IsRepo(string name) => 
+            ProcessRunner.Run("pacman", $"-Si {name}", false) == 0;
     }
 }
