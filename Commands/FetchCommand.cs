@@ -12,8 +12,10 @@ namespace Shitman
                 return;
             }
 
-            Shitman.logger.Info($"## {pkg.Name} {pkg.Version}");
+            PrintField("Name", pkg.Name);
+            PrintField("Version", pkg.Version);
             PrintField("Description", pkg.Description);
+            
             PrintField("Project URL", pkg.URL);
             PrintField("AUR Link", $"https://aur.archlinux.org{pkg.URLPath}");
             PrintField("License", string.Join(", ", pkg.License ?? new List<string> { "None" }));
