@@ -5,17 +5,19 @@ namespace Shitman
 {
     public static class ProcessRunner
     {
-        public static int Run(string command, string arguments)
+
+        public static int Run(string command, string arguments, bool verbose = true)
         {
-            return RunInternal(null, command, arguments);
+            return RunInternal(null, command, arguments, verbose);
         }
 
-        public static int RunInDir(string workingDir, string command, string arguments)
+        public static int RunInDir(string workingDir, string command, string arguments, bool verbose = true)
         {
-            return RunInternal(workingDir, command, arguments);
+            return RunInternal(workingDir, command, arguments, verbose);
         }
 
-        private static int RunInternal(string? workingDir, string command, string arguments)
+
+        private static int RunInternal(string? workingDir, string command, string arguments, bool verbose)
         {
             Process process = new Process();
 
@@ -30,13 +32,13 @@ namespace Shitman
 
             process.OutputDataReceived += (_, e) =>
             {
-                if (!string.IsNullOrEmpty(e.Data))
+                if (verbose && !string.IsNullOrEmpty(e.Data))
                     Console.WriteLine(e.Data);
             };
 
             process.ErrorDataReceived += (_, e) =>
             {
-                if (!string.IsNullOrEmpty(e.Data))
+                if (verbose && !string.IsNullOrEmpty(e.Data))
                     Console.WriteLine(e.Data);
             };
 
