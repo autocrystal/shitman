@@ -6,7 +6,7 @@ namespace Shitman
         {
             var processed = new HashSet<string>();
             await Install(package, processed);
-            Console.WriteLine($"Installation of {package} complete!");
+            Shitman.logger.Info($"Installation of {package} complete!");
         }
 
         public async Task Install(string _name, HashSet<string> processed)
@@ -18,13 +18,13 @@ namespace Shitman
 
             if (IsInstalled(name))
             {
-                Console.WriteLine($"{name} is already installed, skipping...");
+                Shitman.logger.Warn($"{name} is already installed, skipping...");
                 return;
             }
 
             if (IsRepo(name))
             {
-                Console.WriteLine($"{name} in official repos, using pacman...");
+                Shitman.logger.Warn($"{name} in official repos, using pacman...");
                 ProcessRunner.Run("sudo", $"pacman -S {name} --noconfirm --needed");
                 return;
             }
@@ -33,7 +33,7 @@ namespace Shitman
 
             if (pkg == null)
             {
-                Console.WriteLine($"Package {name} not found in AUR or Repos!");
+                Shitman.logger.Error($"Package {name} not found in AUR or Repos!");
                 return;
             }
 
@@ -48,7 +48,7 @@ namespace Shitman
                 }
             }
 
-            Console.WriteLine($"Building {pkg.Name} from AUR...");
+            Shitman.logger.Info($"Building {pkg.Name} from AUR...");
             await Build(pkg);
         }
 

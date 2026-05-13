@@ -4,18 +4,18 @@ namespace Shitman
     {
         public async Task Run(string package)
         {
-            Console.WriteLine($"Removing program: {package}");
+            Shitman.logger.Info($"Removing program: {package}");
 
             int exitCode = ProcessRunner.Run("sudo",$"pacman -Rns {package} --noconfirm");
 
             if (exitCode == 0)
             {
-                Console.WriteLine($"Successfully removed {package}.");
+                Shitman.logger.Info($"Successfully removed {package}.");
                 return;
             }
             else
             {
-                Console.WriteLine($"Failed to remove {package}.");
+                Shitman.logger.Error($"Failed to remove {package}.");
                 return;
             }
         }

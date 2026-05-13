@@ -6,6 +6,7 @@ namespace Shitman
     class Shitman
     {
         public static AurClient aurClient = new AurClient();
+        public static Logger logger = new Logger();
         public static string cacheDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),".cache/shitman/repos");
 
         static async Task Main(string[] args)
