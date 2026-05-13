@@ -15,6 +15,7 @@ namespace Shitman
             SearchCommand searchCommand = new SearchCommand();
             RemoveCommand removeCommand = new RemoveCommand();
             InstallCommand installCommand = new InstallCommand();
+            FetchCommand fetchCommand = new FetchCommand();
 
             if (args.Length == 0)
             {
@@ -36,7 +37,7 @@ namespace Shitman
                     await installCommand.Run(args[1]);
                     break;
 
-                case "-ss":
+                case "-q":
                     if (args.Length < 2)
                     {
                         Console.WriteLine("search requires a query!");
@@ -47,6 +48,16 @@ namespace Shitman
 
                     await searchCommand.Run(query);
                     break;
+
+                case "-f":
+                    if (args.Length != 2)
+                    {
+                        Console.WriteLine("invalid amount of arguments!");
+                        return;
+                    }
+
+                    await fetchCommand.Run(args[1]);
+                    break;  
 
                 case "-r":
                     if (args.Length != 2)
