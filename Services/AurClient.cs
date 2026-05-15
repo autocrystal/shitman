@@ -4,15 +4,6 @@ using System.Text.Json.Serialization;
 
 namespace Shitman
 {
-    public class AurResponse
-    {
-        [JsonPropertyName("results")]
-        public List<AurPackage> Results { get; set; }
-    }
-
-    [JsonSerializable(typeof(AurResponse))]
-    internal partial class AurJsonContext : JsonSerializerContext {}
-
     public class AurClient
     {
         static HttpClient client;
@@ -40,6 +31,23 @@ namespace Shitman
                 return null;
             }
             return response?.Results?.FirstOrDefault();
+        }
+
+        public string? GetInstalledVersion(string name)
+        {
+            if (ProcessRunner.RunWithOutput("pacman", $"-Qi {name}", out string output) != 0)
+                return null;
+
+            foreach (var line in output.Split('\n'))
+            {
+                if (line.StartsWith("Version", StringComparison.OrdinalIgnoreCase))
+                {
+                    var parts = line.Split(':', 2);
+                    if (parts.Length == 2)
+                    return parts[1].Trim();
+                }
+            }
+            return null;
         }
     }
 }

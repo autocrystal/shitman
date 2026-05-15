@@ -18,6 +18,7 @@ namespace Shitman
             InstallCommand installCommand = new InstallCommand();
             FetchCommand fetchCommand = new FetchCommand();
             ListCommand listCommand = new ListCommand();
+            UpgradeCommand upgradeCommand = new UpgradeCommand();
 
             if (args.Length == 0)
             {
@@ -69,7 +70,11 @@ namespace Shitman
                     }
 
                     await removeCommand.Run(args[1]);
-                    break;  
+                    break;
+                case "-u":
+                    string name = args.Length == 2 ? args[1] : null;
+                    await upgradeCommand.Run(name);
+                    break;      
 
                 case "-l":
                     await listCommand.Run();

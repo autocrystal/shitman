@@ -16,6 +16,40 @@ namespace Shitman
             return RunInternal(workingDir, command, arguments, verbose);
         }
 
+        public static int RunWithOutput(string command, string arguments, out string output, bool verbose = false)
+        {
+            var sb = new System.Text.StringBuilder();
+            Process process = new Process();
+            process.StartInfo.FileName = command;
+            process.StartInfo.Arguments = arguments;
+            process.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
+            process.StartInfo.UseShellExecute = false;
+
+            process.OutputDataReceived += (_, e) =>
+            {
+                if (!string.IsNullOrEmpty(e.Data))
+                {
+                    sb.AppendLine(e.Data);
+                    if (verbose) Console.WriteLine(e.Data);
+                }
+            };
+            process.ErrorDataReceived += (_, e) =>
+            {
+                if (verbose && !string.IsNullOrEmpty(e.Data))
+                    Console.WriteLine(e.Data);
+            };
+
+            process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+            process.WaitForExit();
+
+            output = sb.ToString();
+            return process.ExitCode;
+        }
+
 
         private static int RunInternal(string? workingDir, string command, string arguments, bool verbose)
         {

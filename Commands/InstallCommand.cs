@@ -9,7 +9,7 @@ namespace Shitman
             Shitman.logger.Info($"Installation of {package} complete!");
         }
 
-        public async Task Install(string _name, HashSet<string> processed)
+        public async Task Install(string _name, HashSet<string> processed, bool upgrade = false)
         {
             string name = _name.Split(new[] { '>', '<', '=', ' ' }, StringSplitOptions.RemoveEmptyEntries)[0];
 
@@ -18,8 +18,17 @@ namespace Shitman
 
             if (IsInstalled(name))
             {
-                Shitman.logger.Warn($"{name} is already installed, skipping...");
-                return;
+                if(!upgrade || await IsLatestVersion(name))
+                {
+                    if(upgrade)
+                    {
+                        Shitman.logger.Warn($"{name} is already on the latest version, skipping...");
+                    } else
+                    {
+                        Shitman.logger.Warn($"{name} is already installed, skipping...");
+                    }
+                    return;
+                }
             }
 
             if (IsRepo(name))
@@ -44,7 +53,7 @@ namespace Shitman
 
                 foreach (var dep in allDeps)
                 {
-                    await Install(dep, processed);
+                    await Install(dep, processed, upgrade);
                 }
             }
 
@@ -70,6 +79,18 @@ namespace Shitman
 
         private bool IsInstalled(string name) => 
             ProcessRunner.Run("pacman", $"-Qi {name}", false) == 0;
+
+        private async Task<bool> IsLatestVersion(string name)
+        {
+            var installedVersion = Shitman.aurClient.GetInstalledVersion(name);
+            if (installedVersion == null) return false;
+
+            var pkg = await Shitman.aurClient.GetPackage(name);
+            string latestVersion = pkg?.Version;
+            
+            return installedVersion == latestVersion;
+
+        }
 
         private bool IsRepo(string name) => 
             ProcessRunner.Run("pacman", $"-Si {name}", false) == 0;
