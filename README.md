@@ -5,7 +5,7 @@ This is *not* a serious project, thus don't actually use it (😭) and don't exp
 
 ## Installation
 1. Make sure you have dotnet and git installed.
-2. Clone this repository
+2. Clone this repository.
 3. Run `chmod +x ./build.sh && ./build.sh`
 4. Binary will be available in `./bin/Release/net10.0/linux-x64/publish/shitman`
 
