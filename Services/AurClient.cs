@@ -21,7 +21,6 @@ namespace Shitman
 
             AurResponse response = JsonSerializer.Deserialize<AurResponse>(json);
             
-            
             return response?.Results;
         }
 
