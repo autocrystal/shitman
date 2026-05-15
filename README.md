@@ -1,4 +1,8 @@
 # Shitman
+![.NET](https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
+![Git](https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white)
+![AUR](https://img.shields.io/badge/AUR-1793D1?style=for-the-badge&logo=arch-linux&logoColor=white)
+
 A lightweight, but terrible, AUR helper written in C# .NET for Linux.
 
 This is *not* a serious project, thus don't actually use it (😭) and don't expect frequent updates.
