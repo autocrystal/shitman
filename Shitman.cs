@@ -22,7 +22,7 @@ namespace Shitman
 
             if (args.Length == 0)
             {
-                Console.WriteLine("No command provided.");
+                logger.Error("No command provided, exiting...");
                 return;
             }
 
@@ -33,7 +33,7 @@ namespace Shitman
                 case "-s":
                     if (args.Length != 2)
                     {
-                        Console.WriteLine("invalid amount of arguments!");
+                        logger.Error("Install requires a package name!");
                         return;
                     }
 
@@ -43,7 +43,7 @@ namespace Shitman
                 case "-q":
                     if (args.Length < 2)
                     {
-                        Console.WriteLine("search requires a query!");
+                        logger.Error("Search requires a query!");
                         return;
                     }
 
@@ -55,7 +55,7 @@ namespace Shitman
                 case "-f":
                     if (args.Length != 2)
                     {
-                        Console.WriteLine("invalid amount of arguments!");
+                        logger.Error("Fetch requires a package name!");
                         return;
                     }
 
@@ -65,7 +65,7 @@ namespace Shitman
                 case "-r":
                     if (args.Length != 2)
                     {
-                        Console.WriteLine("invalid amount of arguments!");
+                        logger.Error("Remove requires a package name!");
                         return;
                     }
 
@@ -81,7 +81,7 @@ namespace Shitman
                     break;     
 
                 default:
-                    Console.WriteLine("Invalid command.");
+                    logger.Error("Invalid command.");
                     break;
             }
         }
