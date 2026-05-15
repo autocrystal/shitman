@@ -28,13 +28,8 @@ jobs:
     - name: Create Release
       uses: softprops/action-gh-release@v2
       with:
-<<<<<<< HEAD
         tag_name: build-${{ github.run_number }}
         name: Build +${{ github.run_number }}
-=======
-        tag_name: shitman-${{ env.SHORT_SHA }}
-        name: Shitman ${{ env.SHORT_SHA }}
->>>>>>> 75a08bb0e31df50f4bce075296e19ce41f2cb5b9
         files: bin/Release/net10.0/linux-x64/publish/shitman
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
