@@ -4,12 +4,12 @@ namespace Shitman
     {
         public async Task Run(string query)
         {
-            Shitman.logger.Info($"Searching for program: {query}");
+            Shitman.logger.Info($"Searching for query: {query}...");
 
             var packages = await Shitman.aurClient.Search(query);
             
             foreach (var pkg in packages) {
-                Shitman.logger.Info(pkg.Name);
+                Shitman.logger.Info($"{pkg.Name} {pkg.Version} - {pkg.Description}");
             }
         }
     }
