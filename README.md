@@ -4,10 +4,19 @@ A lightweight, but terrible, AUR helper written in C# .NET for Linux.
 This is *not* a serious project, thus don't actually use it (😭) and don't expect frequent updates.
 
 ## Installation
-1. Make sure you have dotnet and git installed.
-2. Clone this repository.g
+### Pre-built binaries
+1. Install [git](https://git-scm.com/)
+2. Download the [latest release](https://github.com/autocrystal/shitman/releases/latest)
+3. Make it executable: `chmod +x ./shitman`
+4. Optionally move it to `/usr/local/bin` for system-wide access
+5. You now (unfortunately) have Shitman installed!
+
+### Building it yourself
+1. Install [git](https://git-scm.com/) and [dotnet v10](https://dotnet.microsoft.com/en-us/download)
+2. Clone this repository
 3. Run `chmod +x ./build.sh && ./build.sh`
 4. Binary will be available in `./bin/Release/net10.0/linux-x64/publish/shitman`
+5. To run the binary, follow the pre-built guide from step 3
 
 ## Usage
 | Command | Action | Description |
