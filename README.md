@@ -1,4 +1,4 @@
-# 💩 Shitman
+# Shitman
 A lightweight, but terrible, AUR helper written in C# .NET for Linux.
 
 This is *not* a serious project, thus don't actually use it (😭) and don't expect frequent updates.
