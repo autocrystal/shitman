@@ -4,7 +4,7 @@ namespace Shitman
     {
         public async Task Run(string package)
         {
-            Shitman.logger.Info($"Removing program: {package}");
+            Shitman.logger.Info($"Removing package: {package}");
 
             int exitCode = ProcessRunner.Run("sudo",$"pacman -Rns {package} --noconfirm");
 

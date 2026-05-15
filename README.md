@@ -3,7 +3,7 @@ A lightweight, but terrible, AUR helper written in C# .NET for Linux.
 
 This is *not* a serious project, thus don't actually use it (😭) and don't expect frequent updates.
 
-## Installing
+## Installation
 1. Make sure you have dotnet and git installed.
 2. Clone this repository
 3. Run `chmod +x ./build.sh && ./build.sh`
