@@ -7,18 +7,11 @@ namespace Shitman
     {
         public static AurClient aurClient = new AurClient();
         public static Logger logger = new Logger();
-        public static string cacheDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),".cache/shitman/repos");
+        public static string cacheDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".cache/shitman/repos");
 
         static async Task Main(string[] args)
         {
             aurClient.Init();
-
-            SearchCommand searchCommand = new SearchCommand();
-            RemoveCommand removeCommand = new RemoveCommand();
-            InstallCommand installCommand = new InstallCommand();
-            FetchCommand fetchCommand = new FetchCommand();
-            ListCommand listCommand = new ListCommand();
-            UpgradeCommand upgradeCommand = new UpgradeCommand();
 
             if (args.Length == 0)
             {
@@ -31,57 +24,39 @@ namespace Shitman
             switch (command)
             {
                 case "-s":
-                    if (args.Length != 2)
-                    {
-                        logger.Error("Install requires a package name!");
-                        return;
-                    }
-
-                    await installCommand.Run(args[1]);
+                    if (args.Length != 2) { logger.Error("Install requires a package name!"); return; }
+                    await new InstallCommand().Run(args[1]);
                     break;
 
                 case "-q":
-                    if (args.Length < 2)
-                    {
-                        logger.Error("Search requires a query!");
-                        return;
-                    }
-
-                    string query = string.Join(" ", args, 1, args.Length - 1);
-
-                    await searchCommand.Run(query);
+                    if (args.Length < 2) { logger.Error("Search requires a query!"); return; }
+                    await new SearchCommand().Run(string.Join(" ", args, 1, args.Length - 1));
                     break;
 
                 case "-f":
-                    if (args.Length != 2)
-                    {
-                        logger.Error("Fetch requires a package name!");
-                        return;
-                    }
-
-                    await fetchCommand.Run(args[1]);
-                    break;  
+                    if (args.Length != 2) { logger.Error("Fetch requires a package name!"); return; }
+                    await new FetchCommand().Run(args[1]);
+                    break;
 
                 case "-r":
-                    if (args.Length != 2)
-                    {
-                        logger.Error("Remove requires a package name!");
-                        return;
-                    }
-
-                    await removeCommand.Run(args[1]);
+                    if (args.Length != 2) { logger.Error("Remove requires a package name!"); return; }
+                    await new RemoveCommand().Run(args[1]);
                     break;
+
                 case "-u":
-                    string name = args.Length == 2 ? args[1] : null;
-                    await upgradeCommand.Run(name);
-                    break;      
+                    await new UpgradeCommand().Run(args.Length == 2 ? args[1] : null);
+                    break;
 
                 case "-l":
-                    await listCommand.Run();
-                    break;     
+                    await new ListCommand().Run();
+                    break;
+
+                case "-h":
+                    await new HelpCommand().Run();
+                    break;
 
                 default:
-                    logger.Error("Invalid command.");
+                    logger.Error("Invalid command. Use -h for help.");
                     break;
             }
         }

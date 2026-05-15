@@ -12,9 +12,10 @@ This is *not* a serious project, thus don't actually use it (😭) and don't exp
 ## Usage
 | Command | Action | Description |
 | :--- | :--- | :--- |
-| `shitman -S <pkg>` | **Install** | Clones, builds, and installs the AUR package and its dependencies. |
-| `shitman -R <pkg>` | **Remove** | Uninstalls an existing package from the system via `pacman`. |
-| `shitman -L` | **List** | List all installed AUR packages. |
-| `shitman -U (optional) <pkg>` | **Upgrade** | Upgrade all or specific packages. |
-| `shitman -F <pkg>` | **Fetch** | Displays detailed metadata (version, deps, votes) for a specific package. |
-| `shitman -Q <query>` | **Search** | Searches the AUR for packages matching the provided keywords. |
+| `shitman -s <pkg>` | **Install** | Install a package. |
+| `shitman -f <pkg>` | **Fetch** | Fetch a package. |
+| `shitman -r <pkg>` | **Remove** | Remove a package. |
+| `shitman -l` | **List** | List installed packages. |
+| `shitman -u [pkg]` | **Upgrade** | Upgrade all or a specific package |
+| `shitman -q <query>` | **Search** | Search for packages. |
+| `shitman -h <query>` | **Help** | Display a help message. |
