@@ -5,7 +5,7 @@ This is *not* a serious project, thus don't actually use it (😭) and don't exp
 
 ## Installation
 1. Make sure you have dotnet and git installed.
-2. Clone this repository.
+2. Clone this repository.g
 3. Run `chmod +x ./build.sh && ./build.sh`
 4. Binary will be available in `./bin/Release/net10.0/linux-x64/publish/shitman`
 
@@ -14,5 +14,7 @@ This is *not* a serious project, thus don't actually use it (😭) and don't exp
 | :--- | :--- | :--- |
 | `shitman -S <pkg>` | **Install** | Clones, builds, and installs the AUR package and its dependencies. |
 | `shitman -R <pkg>` | **Remove** | Uninstalls an existing package from the system via `pacman`. |
+| `shitman -L` | **List** | List all AUR installed packages. |
+| `shitman -U (optional) <pkg>` | **Upgrade** | Upgrade all or specific packages. |
 | `shitman -F <pkg>` | **Fetch** | Displays detailed metadata (version, deps, votes) for a specific package. |
 | `shitman -Q <query>` | **Search** | Searches the AUR for packages matching the provided keywords. |
