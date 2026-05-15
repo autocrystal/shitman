@@ -2,7 +2,7 @@ namespace Shitman
 {
     public class ListCommand
     {
-        public async Task Run(string package)
+        public async Task Run()
         {
             Shitman.logger.Info($"Installed AUR packages:");
 

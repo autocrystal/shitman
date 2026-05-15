@@ -17,6 +17,7 @@ namespace Shitman
             RemoveCommand removeCommand = new RemoveCommand();
             InstallCommand installCommand = new InstallCommand();
             FetchCommand fetchCommand = new FetchCommand();
+            ListCommand listCommand = new ListCommand();
 
             if (args.Length == 0)
             {
@@ -69,6 +70,10 @@ namespace Shitman
 
                     await removeCommand.Run(args[1]);
                     break;  
+
+                case "-l":
+                    await listCommand.Run();
+                    break;     
 
                 default:
                     Console.WriteLine("Invalid command.");
