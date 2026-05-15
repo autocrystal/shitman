@@ -4,7 +4,7 @@ namespace Shitman
     {
         public async Task Run(string query)
         {
-            Shitman.logger.Info($"Searching for query: {query}...");
+            Shitman.logger.Info($"Searching for query: '{query}'");
 
             var packages = await Shitman.aurClient.Search(query);
             
